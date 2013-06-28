@@ -1,0 +1,9 @@
+name: https_servers
+version: 0.1.0
+author: Terry Mitsuoka <TerryMitsuoka@gmail.com>
+description: Dart HTTPS server samples
+dependencies:
+  mime_type: any
+
+#dependencies:
+#  unittest: any
