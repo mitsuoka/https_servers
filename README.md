@@ -9,7 +9,7 @@ This repository consists of following source codes.
 
 - **https\_test\_server\_1.dart** : Simple HTTPS test server.
 
-- **https\_test\_server\_2.dart** : Simple HTTPS server. Can be used as a template for HTTP servers.
+- **https\_test\_server\_2.dart** : Simple HTTPS server. Can be used as a template for HTTPS servers.
 
 このサンプルは[「プログラミング言語Dartの基礎」](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide_about.html)の
 添付資料です。詳細は「HTTPSサーバ (HTTPS Servers)」の章をご覧ください。
