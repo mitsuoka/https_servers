@@ -1,6 +1,6 @@
 /*
   Dart code sample: Simple HTTPS test server
-  1. Run the https_test_2.dart as server.
+  1. Run the https_test_server_2.dart as server.
   2. Access the server from Chrome: https://localhost/test
 
   Notes:
@@ -25,7 +25,7 @@ final REQ_PATH = '/test';        // request path for this application
 final CER_NICKNAME = 'myissuer'; // nickname of the certificate
 final DB_PWD = 'changeit';       // NSS DB access pass word
 final DB_DIR = r'..\nss';        // NSS DB directory path
-final LOG_REQUESTS = true;
+final LOG_REQUESTS = true;       // set true for debugging
 final SESSION_MAX_INACTIVE_INTERVAL = 20; // set this parameter in seconds.
                                  // Dart default timeout value is 20 minutes
 
@@ -131,7 +131,7 @@ class ServiceHandler {
         </head>
         <body>
           <h1>
-            <img src="https://${HOST_NAME}${REQ_PATH}/resources/dart_logo.jpg"
+            <img src="$REQ_PATH/resources/dart_logo.jpg"
                align="middle" width="100" height="100">
             Welcome To My Secure Server</h1><br><br>
           <form method="get" action="$REQ_PATH">
@@ -154,7 +154,7 @@ class ServiceHandler {
         </head>
         <body>
           <h1>
-            <img src="https://${HOST_NAME}${REQ_PATH}/resources/dart_logo.jpg" 
+            <img src="$REQ_PATH/resources/dart_logo.jpg"
                align="middle" width="100" height="100">
             Page ${session.getAttribute('fromPage')}</h1><br>
             Session will be expired after ${SESSION_MAX_INACTIVE_INTERVAL} seconds.<br>
