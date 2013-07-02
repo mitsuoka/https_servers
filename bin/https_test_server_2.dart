@@ -62,10 +62,10 @@ void listenHttpsRequest() {
         else req.response.close();
       },
       onError: (err) {
-        print('listen: error: $err');
+        log('listen: error: $err');
       },
       onDone: () {
-        print('listen: done');
+        log('listen: done');
       },
       cancelOnError: false
       );
