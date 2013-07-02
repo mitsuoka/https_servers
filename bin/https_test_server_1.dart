@@ -48,6 +48,7 @@ void listenHttpsRequest() {
     server.listen(
       (HttpRequest req) {
         if (req.uri.path.contains(REQ_PATH)) processRequest(req);
+        else req.response.close();
       },
       onError: (err) {
         print('listen: error: $err');
