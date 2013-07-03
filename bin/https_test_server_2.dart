@@ -12,6 +12,7 @@
   2. Other than on Windows, you may need to change the DB_DIR value.
 
   June 2013, by Terry Mitsuoka
+  July 2003, modified for ruggedizing
 */
 
 import 'dart:async';
@@ -25,7 +26,7 @@ final REQ_PATH = '/test';        // request path for this application
 final CER_NICKNAME = 'myissuer'; // nickname of the certificate
 final DB_PWD = 'changeit';       // NSS DB access pass word
 final DB_DIR = r'..\nss';        // NSS DB directory path
-final LOG_REQUESTS = false;       // set true for debugging
+final LOG_REQUESTS = true;       // set true for debugging
 final SESSION_MAX_INACTIVE_INTERVAL = 20; // set this parameter in seconds.
                                  // Dart default timeout value is 20 minutes
 
@@ -56,16 +57,21 @@ void listenHttpsRequest() {
     server.sessionTimeout = SESSION_MAX_INACTIVE_INTERVAL; // set session timeout
     server.listen(
       (HttpRequest req) {
+        req.response.done.then((d){
+          if (LOG_REQUESTS) log('sent response to the client for request : ${req.uri}');
+        }).catchError((err) {
+          log('Error occured while sending response.. $err');
+        });
         if (req.uri.path.contains(REQ_PATH)) processRequest(req);
         else if (req.uri.toString().contains('favicon.ico'))
           fhandler.doService(req, '../resources/favicon.ico');
         else req.response.close();
       },
       onError: (err) {
-        log('listen: error: $err');
+        log('Listen request error.. $err');
       },
       onDone: () {
-        log('listen: done');
+        log('Done request listening');
       },
       cancelOnError: false
       );
@@ -87,7 +93,7 @@ void processRequest(HttpRequest req) {
       service.doService(req);
     }
   }catch (err, st) {
-    log(err.toString() + st);
+    log('Request processing error.. $err \n$st');
   }
 }
 
