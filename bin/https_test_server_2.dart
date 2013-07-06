@@ -65,7 +65,10 @@ void listenHttpsRequest() {
         if (req.uri.path.contains(REQ_PATH)) processRequest(req);
         else if (req.uri.toString().contains('favicon.ico'))
           fhandler.doService(req, '../resources/favicon.ico');
-        else req.response.close();
+        else {
+          req.response.statusCode = HttpStatus.BAD_REQUEST;
+          req.response.close();
+        }
       },
       onError: (err) {
         log('Listen request error.. $err');
