@@ -15,6 +15,7 @@
      and DB_PWD values.
   2. Other than on Windows, you may need to change the DB_DIR value.
   June 2013, by Terry Mitsuoka
+  November 2013, API change (remoteHost -> remoteAddress) incorporated
 */
 
 import 'dart:async';
@@ -81,6 +82,6 @@ void log(String s) {
 
 String requestInf(HttpRequest req) =>
   '''
-  req.connectionInfo.remoteHost : ${req.connectionInfo.remoteHost}
+  req.connectionInfo.remoteAddress : ${req.connectionInfo.remoteAddress}
   req.connectionInfo.remotePort : ${req.connectionInfo.remotePort}
   req.uri : ${req.uri}''';

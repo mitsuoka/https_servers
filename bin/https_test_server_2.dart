@@ -13,12 +13,12 @@
 
   June 2013, by Terry Mitsuoka
   July 2003, modified for ruggedizing
+  November 2013, API change (remoteHost -> remoteAddress) incorporated
 */
 
 import 'dart:async';
 import 'dart:io';
 import '../packages/mime_type/mime_type.dart' as mime;
-import 'dart:utf' as utf;
 
 final HOST_NAME = 'localhost';   // use loop back address for the test
 final int SERVER_PORT = 443;     // use well known HTTPS port number
@@ -191,7 +191,7 @@ ${createSessionLog(session).toString()}
     var sb = new StringBuffer( '''request.headers.host : ${request.headers.host}
 request.headers.port : ${request.headers.port}
 request.connectionInfo.localPort : ${request.connectionInfo.localPort}
-request.connectionInfo.remoteHost : ${request.connectionInfo.remoteHost}
+request.connectionInfo.remoteAddress : ${request.connectionInfo.remoteAddress}
 request.connectionInfo.remotePort : ${request.connectionInfo.remotePort}
 request.method : ${request.method}
 request.persistentConnection : ${request.persistentConnection}
@@ -372,6 +372,6 @@ void log(String s) {
 
 String requestInf(HttpRequest req) =>
   '''
-  req.connectionInfo.remoteHost : ${req.connectionInfo.remoteHost}
+  req.connectionInfo.remoteAddress : ${req.connectionInfo.remoteAddress}
   req.connectionInfo.remotePort : ${req.connectionInfo.remotePort}
   req.uri : ${req.uri}''';
