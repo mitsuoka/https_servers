@@ -26,7 +26,7 @@ final int SERVER_PORT = 443;     // use well known HTTPS port number
 final REQ_PATH = '/test';        // request path for this application
 final CER_NICKNAME = 'myissuer'; // nickname of the certificate
 final DB_PWD = 'changeit';       // NSS DB access pass word
-final DB_DIR = r'..\nss';        // NSS DB directory path
+final DB_DIR = r'nss';        // NSS DB directory path
 final LOG_REQUESTS = true;
 
 void main() {
@@ -67,6 +67,7 @@ void listenHttpsRequest() {
 }
 
 void processRequest(HttpRequest req) {
+  req.response.headers.add("Content-Type", "text/html; charset=UTF-8");
   String mes = requestInf(req);
   if (LOG_REQUESTS) log('\n$mes');
   req.response.write(

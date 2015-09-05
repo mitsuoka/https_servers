@@ -25,7 +25,7 @@ final int SERVER_PORT = 443;     // use well known HTTPS port number
 final REQ_PATH = '/test';        // request path for this application
 final CER_NICKNAME = 'myissuer'; // nickname of the certificate
 final DB_PWD = 'changeit';       // NSS DB access pass word
-final DB_DIR = r'..\nss';        // NSS DB directory path
+final DB_DIR = r'nss';        // NSS DB directory path
 final LOG_REQUESTS = true;       // set true for debugging
 final SESSION_MAX_INACTIVE_INTERVAL = 20; // set this parameter in seconds.
                                  // Dart default timeout value is 20 minutes
@@ -64,7 +64,7 @@ void listenHttpsRequest() {
         });
         if (req.uri.path.contains(REQ_PATH)) processRequest(req);
         else if (req.uri.toString().contains('favicon.ico'))
-          fhandler.doService(req, '../resources/favicon.ico');
+          fhandler.doService(req, 'resources/favicon.ico');
         else {
           req.response.statusCode = HttpStatus.BAD_REQUEST;
           req.response.close();
@@ -89,7 +89,7 @@ void processRequest(HttpRequest req) {
     var pattern = REQ_PATH + '/resources';
     var uri = req.uri.toString();
     if (uri.contains(pattern)) {
-      var fileName = '../' + uri.substring(uri.indexOf(pattern) + REQ_PATH.length + 1);
+      var fileName = uri.substring(uri.indexOf(pattern) + REQ_PATH.length + 1);
       fhandler.doService(req, fileName);
     }
     else {
@@ -141,6 +141,7 @@ class ServiceHandler {
         </head>
         <body>
           <h1>
+          <!--  <img src="$REQ_PATH/resources/dart_logo.jpg" -->
             <img src="$REQ_PATH/resources/dart_logo.jpg"
                align="middle" width="100" height="100">
             Welcome To My Secure Server</h1><br><br>
@@ -302,11 +303,11 @@ class Session{
 
 /*
  * File handler class
- * Returns static files in ../resouces directory to the client
+ * Returns static files in resouces directory to the client
  */
 class FileHandler {
 
-  // set the fileName like '../resources/file-name'
+  // set the fileName like 'resources/file-name'
   void doService(HttpRequest req, [String fileName = null]) {
     File file;
     try {
@@ -315,7 +316,7 @@ class FileHandler {
         var pattern = REQ_PATH + '/resources';
         var uri = req.uri.toString();
         if (uri.contains(pattern)) {
-          fileName = '../' + uri.substring(uri.indexOf(pattern) + REQ_PATH.length + 1);
+          fileName = uri.substring(uri.indexOf(pattern) + REQ_PATH.length + 1);
         }
       }
       if (LOG_REQUESTS) log('Requested file : $fileName');
