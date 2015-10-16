@@ -1,58 +1,60 @@
 /*
   Dart code sample: Simple HTTPS test server
+
   1. Run the https_test_server_2.dart as server.
   2. Access the server from Chrome: https://localhost/test
 
   Notes:
-  1. Attached NSS DB includes self-signed certificate. Your browser will complain
+  1. This program runs on Dart-SDK 1.13.0 dev 1.0 or later.
+  2. Tested on Windows.
+  3. Attached OpenSSL holder includes self-signed certificate. Your browser will complain
      about certificate is not valid (but can easily bypass it by telling browser
-     that you trust this site). If you have NSS DB that includes certificate from
-     trusted CA, replace cert9.db and key4.db with yours and change CER_NICKNAME
-     and DB_PWD values.
-  2. Other than on Windows, you may need to change the DB_DIR value.
+     that you trust this site).
+  4. Other than on Windows, you may need to change the path-to-pem file path value.
 
   June 2013, by Terry Mitsuoka
-  July 2003, modified for ruggedizing
+  July 2013, ruggedized
   November 2013, API change (remoteHost -> remoteAddress) incorporated
+  October 2015, API change (NSS -> BoringSSL) incorporated
 */
 
-import 'dart:async';
 import 'dart:io';
 import '../packages/mime_type/mime_type.dart' as mime;
 
+final LOG_REQUESTS = true;       // set true for debugging
 final HOST_NAME = 'localhost';   // use loop back address for the test
 final int SERVER_PORT = 443;     // use well known HTTPS port number
 final REQ_PATH = '/test';        // request path for this application
-final CER_NICKNAME = 'myissuer'; // nickname of the certificate
-final DB_PWD = 'changeit';       // NSS DB access pass word
-final DB_DIR = r'nss';        // NSS DB directory path
-final LOG_REQUESTS = true;       // set true for debugging
+final CERT_PATH = 'openssl/my_crt.pem';   // path to pem cert file
+final KEY_PATH = 'openssl/my_key.pem';    // path to pem private key file
+final KEY_PASSWORD = 'changeit';          // password for the key file
 final SESSION_MAX_INACTIVE_INTERVAL = 20; // set this parameter in seconds.
                                  // Dart default timeout value is 20 minutes
 
+SecurityContext serverContext;   // security context of this server
 ServiceHandler service;
 FileHandler fhandler;
 
 void main() {
   service = new ServiceHandler();
   fhandler = new FileHandler();
-  initializeSecureSocket();
+  setSecurityContext();
   listenHttpsRequest();
 }
 
 
-void initializeSecureSocket() {
-  SecureSocket.initialize(database: DB_DIR,
-                          password: DB_PWD,
-                          useBuiltinRoots: false);
-  log('NSS library initialized.');
+void setSecurityContext() {
+  serverContext = new SecurityContext()
+    ..useCertificateChain(CERT_PATH)
+    ..usePrivateKey(KEY_PATH, password: KEY_PASSWORD);
+  log('BoringSSL security context initialized.');
 }
 
 
 void listenHttpsRequest() {
   HttpServer.bindSecure(HOST_NAME,
                         SERVER_PORT,
-                        certificateName: CER_NICKNAME)
+                        serverContext)
   .then((HttpServer server) {
     server.sessionTimeout = SESSION_MAX_INACTIVE_INTERVAL; // set session timeout
     server.listen(
@@ -324,7 +326,7 @@ class FileHandler {
       String mimeType;
       if (file.existsSync()) {
         mimeType = mime.mime(fileName);
-        if (mimeType == null) mimeType = 'text/plain; charset=UTF-8'; // dafault
+        if (mimeType == null) mimeType = 'text/plain; charset=UTF-8'; // default
         res.headers.set('Content-Type', mimeType);
         // Get length of the file for Content-Length header.
         RandomAccessFile openedFile = file.openSync();
