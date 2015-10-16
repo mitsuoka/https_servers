@@ -11,8 +11,7 @@ This repository consists of following source codes.
 
 - **https\_test\_server\_2.dart** : Simple HTTPS server. Can be used as a template for HTTPS servers.
 
-‚±‚ÌƒTƒ“ƒvƒ‹‚Í[uƒvƒƒOƒ‰ƒ~ƒ“ƒOŒ¾ŒêDart‚ÌŠî‘bv](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide_about.html)‚Ì
-“Y•t‘—¿‚Å‚·BÚ×‚ÍuHTTPSƒT[ƒo (HTTPS Servers)v‚ÌÍ‚ğ‚²——‚­‚¾‚³‚¢B
+ã“ã®ã‚µãƒ³ãƒ—ãƒ«ã¯ã€Œ["ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èªDartã®åŸºç¤"](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide_about.html)ã€ã® æ·»ä»˜è³‡æ–™ã§ã™ã€‚è©³ç´°ã¯ã€ŒHTTPSã‚µãƒ¼ãƒ (HTTPS Servers)ã€ã®ç« ã‚’ã”è¦§ãã ã•ã„
 
 ### Installing ###
 
@@ -27,9 +26,10 @@ This repository consists of following source codes.
 
 ### Notes ###
 
-  1. Attached NSS database includes self-signed certificate. Your browser will complain about certificate is not valid (but can easily bypass it by telling browser that you trust this site). If you have NSS database that includes certificate from trusted CA, replace **cert9.db** and **key4.db** with yours and change the **CER\_NICKNAME** and **DB\_PWD** values.
-
-  2. Other than on Windows, you may need to change the **DB\_DIR** value.
+1. This program runs on **Dart-SDK 1.13.0 dev 1.0** or later.
+2. Tested on Windows.
+3. Attached OpenSSL holder includes self-signed certificate. Your browser will complain about certificate is not valid.
+4. Other than on Windows, you may need to change the path-to-pem file path value.
 
 ### License ###
 This sample is licensed under [MIT License][MIT].
