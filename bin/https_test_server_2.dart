@@ -19,7 +19,7 @@
 */
 
 import 'dart:io';
-import '../packages/mime_type/mime_type.dart' as mime;
+import 'package:mime_type/mime_type.dart' as mime;
 
 final LOG_REQUESTS = true;       // set true for debugging
 final HOST_NAME = 'localhost';   // use loop back address for the test
