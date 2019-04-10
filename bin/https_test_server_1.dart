@@ -20,6 +20,7 @@
   June 2013, by Terry Mitsuoka
   November 2013, API change (remoteHost -> remoteAddress) incorporated
   October 2015, API change (NSS -> BoringSSL) incorporated
+  April 2019, made Dart 2 compliant
 */
 
 import 'dart:io';
@@ -55,7 +56,7 @@ void listenHttpsRequest() {
       (HttpRequest req) {
         if (req.uri.path.contains(REQ_PATH)) processRequest(req);
         else {
-          req.response.statusCode = HttpStatus.BAD_REQUEST;
+          req.response.statusCode = HttpStatus.badRequest;
           req.response.close();
         }
       },
@@ -83,7 +84,7 @@ void processRequest(HttpRequest req) {
 
 // adapt this function to your logger
 void log(String s) {
-  print('${new DateTime.now().toString()} - $s');
+  print('${new DateTime.now().toString().substring(11)} - $s');
 }
 
 String requestInf(HttpRequest req) =>

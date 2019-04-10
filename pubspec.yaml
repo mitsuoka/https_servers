@@ -1,9 +1,10 @@
-name: https_servers
-version: 0.1.0
-author: Terry Mitsuoka <TerryMitsuoka@gmail.com>
-description: Dart HTTPS server samples
+name: https_test_server_1
+version: 0.3.0
+author:
+description: sample Dart2 HTTPS server
+
+environment:
+  sdk: '>=2.0.0-dev <3.0.0'
+
 dependencies:
   mime_type: any
-
-#dependencies:
-#  unittest: any

@@ -16,6 +16,7 @@
   July 2013, ruggedized
   November 2013, API change (remoteHost -> remoteAddress) incorporated
   October 2015, API change (NSS -> BoringSSL) incorporated
+  April 2019, made Dart 2 compliant
 */
 
 import 'dart:io';
@@ -68,7 +69,7 @@ void listenHttpsRequest() {
         else if (req.uri.toString().contains('favicon.ico'))
           fhandler.doService(req, 'resources/favicon.ico');
         else {
-          req.response.statusCode = HttpStatus.BAD_REQUEST;
+          req.response.statusCode = HttpStatus.badRequest;
           req.response.close();
         }
       },
@@ -305,7 +306,7 @@ class Session{
 
 /*
  * File handler class
- * Returns static files in resouces directory to the client
+ * Returns static files in resources directory to the client
  */
 class FileHandler {
 
@@ -361,7 +362,7 @@ class FileHandler {
       </body></html>''';
     if (notFoundPage == null) notFoundPage = notFoundPageHtml;
     req.response
-      ..statusCode = HttpStatus.NOT_FOUND
+      ..statusCode = HttpStatus.notFound
       ..headers.set('Content-Type', 'text/html; charset=UTF-8')
       ..write(notFoundPage)
       ..close();
