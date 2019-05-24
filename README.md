@@ -1,7 +1,7 @@
-﻿#  https_servers #
+#  https_servers #
   **https_servers** is a Dart 2 sample HTTPS server applications.
 
-This is a Dart code sample and an attachment to the ["Dart Language Gide"](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide.pdf) written in Japanese.  This repository consists of following source codes.
+This is a Dart code sample and an attachment to the ["Dart 2 Language Gide"](https://www.cresc.co.jp/tech/java/Google_Dart2/introduction/main_page.html) written in Japanese.  This repository consists of following source codes.
 
   - **https\_test\_server\_1.dart** : Simple HTTPS test server.
 
